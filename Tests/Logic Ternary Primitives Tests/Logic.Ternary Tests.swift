@@ -7,26 +7,33 @@ import Testing
 
 // MARK: - Test Cases
 
+/// Namespace for the file's logic test-case fixtures (Nest.Name form).
+enum Case {}
+
 /// Represents a binary logic test case with optional Bool values.
-struct BinaryTestCase: CustomTestStringConvertible, Sendable {
-    let lhs: Bool?
-    let rhs: Bool?
-    let expected: Bool?
+extension Case {
+    struct Binary: CustomTestStringConvertible, Sendable {
+        let lhs: Bool?
+        let rhs: Bool?
+        let expected: Bool?
+    }
 }
 
-extension BinaryTestCase {
+extension Case.Binary {
     var testDescription: String {
         "\(lhs.map(String.init(describing:)) ?? "nil") → \(rhs.map(String.init(describing:)) ?? "nil") = \(expected.map(String.init(describing:)) ?? "nil")"
     }
 }
 
 /// Represents a unary logic test case.
-struct UnaryTestCase: CustomTestStringConvertible, Sendable {
-    let input: Bool?
-    let expected: Bool?
+extension Case {
+    struct Unary: CustomTestStringConvertible, Sendable {
+        let input: Bool?
+        let expected: Bool?
+    }
 }
 
-extension UnaryTestCase {
+extension Case.Unary {
     var testDescription: String {
         "\(input.map(String.init(describing:)) ?? "nil") → \(expected.map(String.init(describing:)) ?? "nil")"
     }
@@ -37,14 +44,14 @@ extension UnaryTestCase {
 extension Logic.Ternary {
     @Suite
     struct Test {
-        static let notCases: [UnaryTestCase] = [
+        static let notCases: [Case.Unary] = [
             .init(input: true, expected: false),
             .init(input: false, expected: true),
             .init(input: nil, expected: nil),
         ]
 
         @Test(arguments: notCases)
-        func not(_ testCase: UnaryTestCase) {
+        func not(_ testCase: Case.Unary) {
             #expect((!testCase.input) == testCase.expected)
         }
 
@@ -61,7 +68,7 @@ extension Logic.Ternary.Test {
 
     @Suite
     struct AND {
-        static let andCases: [BinaryTestCase] = [
+        static let andCases: [Case.Binary] = [
             // Known values
             .init(lhs: false, rhs: false, expected: false),
             .init(lhs: false, rhs: true, expected: false),
@@ -77,13 +84,13 @@ extension Logic.Ternary.Test {
         ]
 
         @Test(arguments: andCases)
-        func and(_ testCase: BinaryTestCase) {
+        func and(_ testCase: Case.Binary) {
             let result = Logic.Ternary.and(testCase.lhs, testCase.rhs)
             #expect(result == testCase.expected)
         }
 
         @Test(arguments: andCases)
-        func `and Operator`(_ testCase: BinaryTestCase) {
+        func `and Operator`(_ testCase: Case.Binary) {
             let result: Bool? = testCase.lhs && testCase.rhs
             #expect(result == testCase.expected)
         }
@@ -93,7 +100,7 @@ extension Logic.Ternary.Test {
 
     @Suite
     struct OR {
-        static let orCases: [BinaryTestCase] = [
+        static let orCases: [Case.Binary] = [
             // Known values
             .init(lhs: false, rhs: false, expected: false),
             .init(lhs: false, rhs: true, expected: true),
@@ -109,13 +116,13 @@ extension Logic.Ternary.Test {
         ]
 
         @Test(arguments: orCases)
-        func or(_ testCase: BinaryTestCase) {
+        func or(_ testCase: Case.Binary) {
             let result = Logic.Ternary.or(testCase.lhs, testCase.rhs)
             #expect(result == testCase.expected)
         }
 
         @Test(arguments: orCases)
-        func `or Operator`(_ testCase: BinaryTestCase) {
+        func `or Operator`(_ testCase: Case.Binary) {
             let result: Bool? = testCase.lhs || testCase.rhs
             #expect(result == testCase.expected)
         }
@@ -125,7 +132,7 @@ extension Logic.Ternary.Test {
 
     @Suite
     struct XOR {
-        static let xorCases: [BinaryTestCase] = [
+        static let xorCases: [Case.Binary] = [
             // Known values
             .init(lhs: false, rhs: false, expected: false),
             .init(lhs: false, rhs: true, expected: true),
@@ -140,7 +147,7 @@ extension Logic.Ternary.Test {
         ]
 
         @Test(arguments: xorCases)
-        func xor(_ testCase: BinaryTestCase) {
+        func xor(_ testCase: Case.Binary) {
             #expect((testCase.lhs ^ testCase.rhs) == testCase.expected)
         }
     }
@@ -149,7 +156,7 @@ extension Logic.Ternary.Test {
 
     @Suite
     struct XNOR {
-        static let xnorCases: [BinaryTestCase] = [
+        static let xnorCases: [Case.Binary] = [
             // Known values
             .init(lhs: false, rhs: false, expected: true),
             .init(lhs: false, rhs: true, expected: false),
@@ -164,12 +171,12 @@ extension Logic.Ternary.Test {
         ]
 
         @Test(arguments: xnorCases)
-        func xnor(_ testCase: BinaryTestCase) {
+        func xnor(_ testCase: Case.Binary) {
             #expect((testCase.lhs !^ testCase.rhs) == testCase.expected)
         }
 
         @Test(arguments: xnorCases)
-        func iff(_ testCase: BinaryTestCase) {
+        func iff(_ testCase: Case.Binary) {
             // Biconditional is equivalence: same table as XNOR.
             #expect(Logic.Ternary.iff(testCase.lhs, testCase.rhs) == testCase.expected)
         }
@@ -179,7 +186,7 @@ extension Logic.Ternary.Test {
 
     @Suite
     struct NAND {
-        static let nandCases: [BinaryTestCase] = [
+        static let nandCases: [Case.Binary] = [
             // Known values
             .init(lhs: false, rhs: false, expected: true),
             .init(lhs: false, rhs: true, expected: true),
@@ -195,7 +202,7 @@ extension Logic.Ternary.Test {
         ]
 
         @Test(arguments: nandCases)
-        func nand(_ testCase: BinaryTestCase) {
+        func nand(_ testCase: Case.Binary) {
             let result: Bool? = testCase.lhs !&& testCase.rhs
             #expect(result == testCase.expected)
         }
@@ -205,7 +212,7 @@ extension Logic.Ternary.Test {
 
     @Suite
     struct NOR {
-        static let norCases: [BinaryTestCase] = [
+        static let norCases: [Case.Binary] = [
             // Known values
             .init(lhs: false, rhs: false, expected: true),
             .init(lhs: false, rhs: true, expected: false),
@@ -221,7 +228,7 @@ extension Logic.Ternary.Test {
         ]
 
         @Test(arguments: norCases)
-        func nor(_ testCase: BinaryTestCase) {
+        func nor(_ testCase: Case.Binary) {
             let result: Bool? = testCase.lhs !|| testCase.rhs
             #expect(result == testCase.expected)
         }
@@ -231,7 +238,7 @@ extension Logic.Ternary.Test {
 
     @Suite
     struct Implication {
-        static let implicationCases: [BinaryTestCase] = [
+        static let implicationCases: [Case.Binary] = [
             .init(lhs: true, rhs: true, expected: true),
             .init(lhs: true, rhs: false, expected: false),
             .init(lhs: true, rhs: nil, expected: nil),
@@ -246,14 +253,14 @@ extension Logic.Ternary.Test {
         ]
 
         @Test(arguments: implicationCases)
-        func implies(_ testCase: BinaryTestCase) {
+        func implies(_ testCase: Case.Binary) {
             let result = Logic.Ternary.implies(testCase.lhs, testCase.rhs)
             #expect(result == testCase.expected)
         }
 
         /// Verifies that implication a → b matches (not a) or b.
         @Test(arguments: implicationCases)
-        func `matches Disjunctive Form`(_ testCase: BinaryTestCase) {
+        func `matches Disjunctive Form`(_ testCase: Case.Binary) {
             let result: Bool? = !testCase.lhs || testCase.rhs
             #expect(result == testCase.expected)
         }
@@ -422,47 +429,47 @@ extension Logic.Ternary.Test {
         static let values: [Bool?] = [true, false, nil]
 
         @Test(arguments: Logic.Ternary.Test.AND.andCases)
-        func and(_ testCase: BinaryTestCase) {
+        func and(_ testCase: Case.Binary) {
             #expect(Logic.and(testCase.lhs, testCase.rhs) == testCase.expected)
         }
 
         @Test(arguments: Logic.Ternary.Test.OR.orCases)
-        func or(_ testCase: BinaryTestCase) {
+        func or(_ testCase: Case.Binary) {
             #expect(Logic.or(testCase.lhs, testCase.rhs) == testCase.expected)
         }
 
         @Test(arguments: Logic.Ternary.Test.notCases)
-        func not(_ testCase: UnaryTestCase) {
+        func not(_ testCase: Case.Unary) {
             #expect(Logic.not(testCase.input) == testCase.expected)
         }
 
         @Test(arguments: Logic.Ternary.Test.XOR.xorCases)
-        func xor(_ testCase: BinaryTestCase) {
+        func xor(_ testCase: Case.Binary) {
             #expect(Logic.xor(testCase.lhs, testCase.rhs) == testCase.expected)
         }
 
         @Test(arguments: Logic.Ternary.Test.NAND.nandCases)
-        func nand(_ testCase: BinaryTestCase) {
+        func nand(_ testCase: Case.Binary) {
             #expect(Logic.nand(testCase.lhs, testCase.rhs) == testCase.expected)
         }
 
         @Test(arguments: Logic.Ternary.Test.NOR.norCases)
-        func nor(_ testCase: BinaryTestCase) {
+        func nor(_ testCase: Case.Binary) {
             #expect(Logic.nor(testCase.lhs, testCase.rhs) == testCase.expected)
         }
 
         @Test(arguments: Logic.Ternary.Test.XNOR.xnorCases)
-        func xnor(_ testCase: BinaryTestCase) {
+        func xnor(_ testCase: Case.Binary) {
             #expect(Logic.xnor(testCase.lhs, testCase.rhs) == testCase.expected)
         }
 
         @Test(arguments: Logic.Ternary.Test.Implication.implicationCases)
-        func implies(_ testCase: BinaryTestCase) {
+        func implies(_ testCase: Case.Binary) {
             #expect(Logic.implies(testCase.lhs, testCase.rhs) == testCase.expected)
         }
 
         @Test(arguments: Logic.Ternary.Test.XNOR.xnorCases)
-        func iff(_ testCase: BinaryTestCase) {
+        func iff(_ testCase: Case.Binary) {
             #expect(Logic.iff(testCase.lhs, testCase.rhs) == testCase.expected)
         }
 

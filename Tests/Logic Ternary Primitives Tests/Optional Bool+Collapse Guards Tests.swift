@@ -15,6 +15,10 @@ import Testing
 
 @Suite
 struct `Optional Bool Strict Tests` {
+    @Suite struct Unit {}
+    @Suite struct `Edge Case` {}
+    @Suite struct Integration {}
+
     static let values: [Bool?] = [true, false, nil]
 
     @Test(arguments: values, [true, false])

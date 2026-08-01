@@ -5,6 +5,10 @@ import Testing
 
 @Suite
 struct `Logic.Ternary.Builder Tests` {
+    @Suite struct Unit {}
+    @Suite struct `Edge Case` {}
+    @Suite struct Integration {}
+
 
     @Suite
     struct `Logic.Ternary.all (Strong Kleene AND)` {
