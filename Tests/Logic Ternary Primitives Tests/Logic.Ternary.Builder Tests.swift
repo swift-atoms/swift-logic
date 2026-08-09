@@ -9,7 +9,6 @@ struct `Logic.Ternary.Builder Tests` {
     @Suite struct `Edge Case` {}
     @Suite struct Integration {}
 
-
     @Suite
     struct `Logic.Ternary.all (Strong Kleene AND)` {
 
