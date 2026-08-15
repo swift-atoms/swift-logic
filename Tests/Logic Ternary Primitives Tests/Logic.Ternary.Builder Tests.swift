@@ -393,7 +393,10 @@ struct `Logic.Ternary.Builder Tests` {
             #expect(r2 == .some(false))
 
             // true AND unknown = unknown
-            let r3 = Logic.Ternary.Builder<Bool?>.All.buildPartialBlock(accumulated: true, next: nil)
+            let r3 = Logic.Ternary.Builder<Bool?>.All.buildPartialBlock(
+                accumulated: true,
+                next: nil
+            )
             #expect(r3 == nil)
 
             // unknown AND false = false (false dominates)
