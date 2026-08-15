@@ -31,7 +31,8 @@
 @available(
     *,
     deprecated,
-    message: "collapses Kleene unknown to a definite verdict — compose with Bool?.all/any, &&, ||, ! instead; if the collapse is intended, spell it explicitly with .isTrue / .isFalse / .isUnknown"
+    message:
+        "collapses Kleene unknown to a definite verdict — compose with Bool?.all/any, &&, ||, ! instead; if the collapse is intended, spell it explicitly with .isTrue / .isFalse / .isUnknown"
 )
 public func == (lhs: Bool?, rhs: Bool) -> Bool {
     lhs == .some(rhs)
@@ -43,7 +44,8 @@ public func == (lhs: Bool?, rhs: Bool) -> Bool {
 @available(
     *,
     deprecated,
-    message: "collapses Kleene unknown to a definite verdict — compose with Bool?.all/any, &&, ||, ! instead; if the collapse is intended, spell it explicitly with .isTrue / .isFalse / .isUnknown"
+    message:
+        "collapses Kleene unknown to a definite verdict — compose with Bool?.all/any, &&, ||, ! instead; if the collapse is intended, spell it explicitly with .isTrue / .isFalse / .isUnknown"
 )
 public func == (lhs: Bool, rhs: Bool?) -> Bool {
     .some(lhs) == rhs
@@ -52,7 +54,12 @@ public func == (lhs: Bool, rhs: Bool?) -> Bool {
 /// Compares a ternary value against a definite Boolean, collapsing `unknown`.
 ///
 /// In Strong Kleene semantics `nil` means "not yet assessed". This comparison maps it to `true`, affirming a verdict from an epistemic gap — the most dangerous collapse direction for exception ("tenzij") clauses.
-@available(*, deprecated, message: "collapses Kleene unknown — negate with ! (Kleene) instead; if the collapse is intended, spell it explicitly with .isTrue / .isFalse / .isUnknown")
+@available(
+    *,
+    deprecated,
+    message:
+        "collapses Kleene unknown — negate with ! (Kleene) instead; if the collapse is intended, spell it explicitly with .isTrue / .isFalse / .isUnknown"
+)
 public func != (lhs: Bool?, rhs: Bool) -> Bool {
     lhs != .some(rhs)
 }
@@ -60,7 +67,12 @@ public func != (lhs: Bool?, rhs: Bool) -> Bool {
 /// Compares a definite Boolean against a ternary value, collapsing `unknown`.
 ///
 /// The reversed spelling of the same collapse: `true != verdict` maps an unassessed verdict to `true`.
-@available(*, deprecated, message: "collapses Kleene unknown — negate with ! (Kleene) instead; if the collapse is intended, spell it explicitly with .isTrue / .isFalse / .isUnknown")
+@available(
+    *,
+    deprecated,
+    message:
+        "collapses Kleene unknown — negate with ! (Kleene) instead; if the collapse is intended, spell it explicitly with .isTrue / .isFalse / .isUnknown"
+)
 public func != (lhs: Bool, rhs: Bool?) -> Bool {
     .some(lhs) != rhs
 }
