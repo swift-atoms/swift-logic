@@ -1,15 +1,15 @@
-// swift-tools-version: 6.3.3
+// swift-tools-version: 6.4
 
 import PackageDescription
 
 let package = Package(
     name: "swift-logic-primitives",
     platforms: [
-        .macOS("27"),
-        .iOS("27"),
-        .tvOS("27"),
-        .watchOS("27"),
-        .visionOS("27")
+        .macOS(.v27),
+        .iOS(.v27),
+        .tvOS(.v27),
+        .watchOS(.v27),
+        .visionOS(.v27),
     ],
     products: [
         // MARK: - Namespace (per [MOD-017])
@@ -34,7 +34,10 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/swift-primitives/swift-standard-library-extensions.git", branch: "main")
+        .package(
+            url: "https://github.com/swift-primitives/swift-standard-library-extensions.git",
+            branch: "main"
+        )
     ],
     targets: [
         // MARK: - Namespace (per [MOD-017])
@@ -65,7 +68,7 @@ let package = Package(
         .testTarget(
             name: "Logic Primitives Tests",
             dependencies: [
-                "Logic Primitives",
+                "Logic Primitives"
             ]
         ),
         .testTarget(
@@ -75,7 +78,10 @@ let package = Package(
                 // The Builder tests use `Bool.all` from Standard Library Extensions.
                 // Pre-migration this resolved transitively through the Core SLE funnel;
                 // the funnel is redistributed per [MOD-038], so declare it directly.
-                .product(name: "Standard Library Extensions", package: "swift-standard-library-extensions"),
+                .product(
+                    name: "Standard Library Extensions",
+                    package: "swift-standard-library-extensions"
+                ),
             ]
         ),
 
@@ -83,7 +89,7 @@ let package = Package(
         .target(
             name: "Logic Primitives Test Support",
             dependencies: [
-                "Logic Primitives",
+                "Logic Primitives"
             ],
             path: "Tests/Support"
         ),
