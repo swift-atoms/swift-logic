@@ -1,14 +1,3 @@
-// Tests for the collapse guards and explicit collapse accessors.
-//
-// The guarded operators are deliberately exercised here (this file compiles
-// with DeprecatedDeclaration warnings by design): the assertions pin the
-// shadow overloads to standard-library semantics, so adopting the module can
-// never change runtime behavior. If a refactor genericizes the guards, the
-// shadows stop being selected and these tests stop emitting the deprecation
-// warnings — the semantics assertions still pass, so warning presence should
-// additionally be checked when touching this target (see the load-bearing
-// comment in the source file).
-
 import Testing
 
 @testable import Logic_Ternary_Primitives
@@ -23,7 +12,7 @@ struct `Optional Bool Strict Tests` {
 
     @Test(arguments: values, [true, false])
     func `equals Matches Standard Library Semantics`(_ lhs: Bool?, _ rhs: Bool) {
-        // Standard-library value computed via the unguarded optional form.
+
         let expected = lhs == Optional(rhs)
         #expect((lhs == rhs) == expected)
     }

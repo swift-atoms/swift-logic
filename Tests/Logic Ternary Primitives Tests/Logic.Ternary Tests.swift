@@ -1,16 +1,9 @@
-// TernaryLogic Tests.swift
-// Tests for Strong Kleene three-valued logic.
-
 import Testing
 
 @testable import Logic_Ternary_Primitives
 
-// MARK: - Test Cases
-
-/// Namespace for the file's logic test-case fixtures (Nest.Name form).
 enum Case {}
 
-/// Represents a binary logic test case with optional Bool values.
 extension Case {
     struct Binary: CustomTestStringConvertible, Sendable {
         let lhs: Bool?
@@ -25,7 +18,6 @@ extension Case.Binary {
     }
 }
 
-/// Represents a unary logic test case.
 extension Case {
     struct Unary: CustomTestStringConvertible, Sendable {
         let input: Bool?
@@ -38,8 +30,6 @@ extension Case.Unary {
         "\(input.map(String.init(describing:)) ?? "nil") → \(expected.map(String.init(describing:)) ?? "nil")"
     }
 }
-
-// MARK: - NOT Tests
 
 extension Logic.Ternary {
     @Suite
@@ -64,20 +54,18 @@ extension Logic.Ternary {
 
 extension Logic.Ternary.Test {
 
-    // MARK: - AND Tests
-
     @Suite
     struct AND {
         static let andCases: [Case.Binary] = [
-            // Known values
+
             .init(lhs: false, rhs: false, expected: false),
             .init(lhs: false, rhs: true, expected: false),
             .init(lhs: true, rhs: false, expected: false),
             .init(lhs: true, rhs: true, expected: true),
-            // False dominates unknown
+
             .init(lhs: false, rhs: nil, expected: false),
             .init(lhs: nil, rhs: false, expected: false),
-            // Nil propagation
+
             .init(lhs: true, rhs: nil, expected: nil),
             .init(lhs: nil, rhs: true, expected: nil),
             .init(lhs: nil, rhs: nil, expected: nil),
@@ -96,20 +84,18 @@ extension Logic.Ternary.Test {
         }
     }
 
-    // MARK: - OR Tests
-
     @Suite
     struct OR {
         static let orCases: [Case.Binary] = [
-            // Known values
+
             .init(lhs: false, rhs: false, expected: false),
             .init(lhs: false, rhs: true, expected: true),
             .init(lhs: true, rhs: false, expected: true),
             .init(lhs: true, rhs: true, expected: true),
-            // True dominates unknown
+
             .init(lhs: true, rhs: nil, expected: true),
             .init(lhs: nil, rhs: true, expected: true),
-            // Nil propagation
+
             .init(lhs: false, rhs: nil, expected: nil),
             .init(lhs: nil, rhs: false, expected: nil),
             .init(lhs: nil, rhs: nil, expected: nil),
@@ -128,17 +114,15 @@ extension Logic.Ternary.Test {
         }
     }
 
-    // MARK: - XOR Tests
-
     @Suite
     struct XOR {
         static let xorCases: [Case.Binary] = [
-            // Known values
+
             .init(lhs: false, rhs: false, expected: false),
             .init(lhs: false, rhs: true, expected: true),
             .init(lhs: true, rhs: false, expected: true),
             .init(lhs: true, rhs: true, expected: false),
-            // Nil always propagates
+
             .init(lhs: false, rhs: nil, expected: nil),
             .init(lhs: true, rhs: nil, expected: nil),
             .init(lhs: nil, rhs: false, expected: nil),
@@ -152,17 +136,15 @@ extension Logic.Ternary.Test {
         }
     }
 
-    // MARK: - XNOR Tests
-
     @Suite
     struct XNOR {
         static let xnorCases: [Case.Binary] = [
-            // Known values
+
             .init(lhs: false, rhs: false, expected: true),
             .init(lhs: false, rhs: true, expected: false),
             .init(lhs: true, rhs: false, expected: false),
             .init(lhs: true, rhs: true, expected: true),
-            // Nil always propagates
+
             .init(lhs: false, rhs: nil, expected: nil),
             .init(lhs: true, rhs: nil, expected: nil),
             .init(lhs: nil, rhs: false, expected: nil),
@@ -177,25 +159,23 @@ extension Logic.Ternary.Test {
 
         @Test(arguments: xnorCases)
         func iff(_ testCase: Case.Binary) {
-            // Biconditional is equivalence: same table as XNOR.
+
             #expect(Logic.Ternary.iff(testCase.lhs, testCase.rhs) == testCase.expected)
         }
     }
 
-    // MARK: - NAND Tests
-
     @Suite
     struct NAND {
         static let nandCases: [Case.Binary] = [
-            // Known values
+
             .init(lhs: false, rhs: false, expected: true),
             .init(lhs: false, rhs: true, expected: true),
             .init(lhs: true, rhs: false, expected: true),
             .init(lhs: true, rhs: true, expected: false),
-            // NAND(false, nil) = NOT(AND(false, nil)) = NOT(false) = true
+
             .init(lhs: false, rhs: nil, expected: true),
             .init(lhs: nil, rhs: false, expected: true),
-            // NAND(true, nil) = NOT(AND(true, nil)) = NOT(nil) = nil
+
             .init(lhs: true, rhs: nil, expected: nil),
             .init(lhs: nil, rhs: true, expected: nil),
             .init(lhs: nil, rhs: nil, expected: nil),
@@ -208,20 +188,18 @@ extension Logic.Ternary.Test {
         }
     }
 
-    // MARK: - NOR Tests
-
     @Suite
     struct NOR {
         static let norCases: [Case.Binary] = [
-            // Known values
+
             .init(lhs: false, rhs: false, expected: true),
             .init(lhs: false, rhs: true, expected: false),
             .init(lhs: true, rhs: false, expected: false),
             .init(lhs: true, rhs: true, expected: false),
-            // NOR(true, nil) = NOT(OR(true, nil)) = NOT(true) = false
+
             .init(lhs: true, rhs: nil, expected: false),
             .init(lhs: nil, rhs: true, expected: false),
-            // NOR(false, nil) = NOT(OR(false, nil)) = NOT(nil) = nil
+
             .init(lhs: false, rhs: nil, expected: nil),
             .init(lhs: nil, rhs: false, expected: nil),
             .init(lhs: nil, rhs: nil, expected: nil),
@@ -234,19 +212,17 @@ extension Logic.Ternary.Test {
         }
     }
 
-    // MARK: - Implication Tests
-
     @Suite
     struct Implication {
         static let implicationCases: [Case.Binary] = [
             .init(lhs: true, rhs: true, expected: true),
             .init(lhs: true, rhs: false, expected: false),
             .init(lhs: true, rhs: nil, expected: nil),
-            // false → anything = true (vacuous truth)
+
             .init(lhs: false, rhs: true, expected: true),
             .init(lhs: false, rhs: false, expected: true),
             .init(lhs: false, rhs: nil, expected: true),
-            // nil → true = true (result determined regardless of lhs)
+
             .init(lhs: nil, rhs: true, expected: true),
             .init(lhs: nil, rhs: false, expected: nil),
             .init(lhs: nil, rhs: nil, expected: nil),
@@ -258,15 +234,12 @@ extension Logic.Ternary.Test {
             #expect(result == testCase.expected)
         }
 
-        /// Verifies that implication a → b matches (not a) or b.
         @Test(arguments: implicationCases)
         func `matches Disjunctive Form`(_ testCase: Case.Binary) {
             let result: Bool? = !testCase.lhs || testCase.rhs
             #expect(result == testCase.expected)
         }
     }
-
-    // MARK: - Short-Circuit Tests
 
     @Suite
     struct `Short Circuit` {
@@ -367,15 +340,13 @@ extension Logic.Ternary.Test {
         }
     }
 
-    // MARK: - De Morgan Tests
-
     @Suite
     struct `De Morgan` {
         static let values: [Bool?] = [true, false, nil]
 
         @Test(arguments: values, values)
         func `de Morgan And`(_ a: Bool?, _ b: Bool?) {
-            // !(a && b) == !a || !b — holds across all nine ternary pairs
+
             let lhs: Bool? = !(a && b)
             let rhs: Bool? = !a || !b
             #expect(lhs == rhs)
@@ -383,14 +354,12 @@ extension Logic.Ternary.Test {
 
         @Test(arguments: values, values)
         func `de Morgan Or`(_ a: Bool?, _ b: Bool?) {
-            // !(a || b) == !a && !b — holds across all nine ternary pairs
+
             let lhs: Bool? = !(a || b)
             let rhs: Bool? = !a && !b
             #expect(lhs == rhs)
         }
     }
-
-    // MARK: - Complex Expression Tests
 
     @Suite
     struct `Complex Expression` {
@@ -400,17 +369,14 @@ extension Logic.Ternary.Test {
             let b: Bool? = false
             let c: Bool? = nil
 
-            // (true && false) || nil = false || nil = nil
             let aAndB: Bool? = a && b
             let result1: Bool? = aAndB || c
             #expect(result1 == nil)
 
-            // true && (false || nil) = true && nil = nil
             let bOrC: Bool? = b || c
             let result2: Bool? = a && bOrC
             #expect(result2 == nil)
 
-            // (true || nil) && false = true && false = false
             let aOrC: Bool? = a || c
             let result3: Bool? = aOrC && b
             #expect(result3 == .some(false))
@@ -418,11 +384,6 @@ extension Logic.Ternary.Test {
     }
 }
 
-// MARK: - Base Logic Function Tests
-
-/// The `Logic.and`/`Logic.or`/… functions on `Logic.Protocol` must degrade to
-/// Strong Kleene semantics when applied to a ternary conformer such as `Bool?`
-/// (regression coverage: they previously collapsed `unknown` to `false`).
 extension Logic.Ternary.Test {
     @Suite
     struct `Kleene Degradation` {
@@ -473,7 +434,6 @@ extension Logic.Ternary.Test {
             #expect(Logic.iff(testCase.lhs, testCase.rhs) == testCase.expected)
         }
 
-        /// The base functions must agree with the ternary truth tables on every pair.
         @Test(arguments: values, values)
         func `agrees With Ternary Operators`(_ a: Bool?, _ b: Bool?) {
             #expect(Logic.and(a, b) == (a && b))

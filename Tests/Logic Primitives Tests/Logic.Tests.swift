@@ -1,15 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-primitives open source project
-//
-// Copyright (c) 2024-2025 Coen ten Thije Boonkkamp and the swift-primitives
-// project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 import Testing
 
 @testable import Logic_Primitives
@@ -17,8 +5,6 @@ import Testing
 extension Logic {
     @Suite
     struct Test {
-
-        // MARK: - AND
 
         @Test
         func and() {
@@ -28,8 +14,6 @@ extension Logic {
             #expect(Logic.and(false, false) == false)
         }
 
-        // MARK: - OR
-
         @Test
         func or() {
             #expect(Logic.or(true, true) == true)
@@ -38,15 +22,11 @@ extension Logic {
             #expect(Logic.or(false, false) == false)
         }
 
-        // MARK: - NOT
-
         @Test
         func not() {
             #expect(Logic.not(true) == false)
             #expect(Logic.not(false) == true)
         }
-
-        // MARK: - XOR
 
         @Test
         func xor() {
@@ -56,8 +36,6 @@ extension Logic {
             #expect(Logic.xor(false, false) == false)
         }
 
-        // MARK: - NAND
-
         @Test
         func nand() {
             #expect(Logic.nand(true, true) == false)
@@ -65,8 +43,6 @@ extension Logic {
             #expect(Logic.nand(false, true) == true)
             #expect(Logic.nand(false, false) == true)
         }
-
-        // MARK: - NOR
 
         @Test
         func nor() {
@@ -76,8 +52,6 @@ extension Logic {
             #expect(Logic.nor(false, false) == true)
         }
 
-        // MARK: - XNOR
-
         @Test
         func xnor() {
             #expect(Logic.xnor(true, true) == true)
@@ -86,8 +60,6 @@ extension Logic {
             #expect(Logic.xnor(false, false) == true)
         }
 
-        // MARK: - Implication
-
         @Test
         func implies() {
             #expect(Logic.implies(true, true) == true)
@@ -95,8 +67,6 @@ extension Logic {
             #expect(Logic.implies(false, true) == true)
             #expect(Logic.implies(false, false) == true)
         }
-
-        // MARK: - Biconditional
 
         @Test
         func iff() {
@@ -114,7 +84,7 @@ extension Bool {
 
         @Test
         func `bool Conformance`() {
-            // Bool conforms to Logic.Protocol
+
             let t: Bool = .true
             let f: Bool = .false
 

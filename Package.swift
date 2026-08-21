@@ -12,13 +12,12 @@ let package = Package(
         .visionOS(.v27),
     ],
     products: [
-        // MARK: - Namespace (per [MOD-017])
+
         .library(
             name: "Logic Primitive",
             targets: ["Logic Primitive"]
         ),
 
-        // MARK: - Umbrella
         .library(
             name: "Logic Primitives",
             targets: ["Logic Primitives"]
@@ -40,16 +39,12 @@ let package = Package(
         )
     ],
     targets: [
-        // MARK: - Namespace (per [MOD-017])
-        // Zero external deps. Owns `public enum Logic` + all stdlib-only
-        // foundational decls (the Logic namespace, Logic.Protocol, Bool
-        // conformance, and the Logic.{and,or,not,xor,…} operator functions).
+
         .target(
             name: "Logic Primitive",
             dependencies: []
         ),
 
-        // MARK: - Ternary
         .target(
             name: "Logic Ternary Primitives",
             dependencies: [
@@ -57,7 +52,6 @@ let package = Package(
             ]
         ),
 
-        // MARK: - Umbrella
         .target(
             name: "Logic Primitives",
             dependencies: [
@@ -75,9 +69,7 @@ let package = Package(
             name: "Logic Ternary Primitives Tests",
             dependencies: [
                 "Logic Ternary Primitives",
-                // The Builder tests use `Bool.all` from Standard Library Extensions.
-                // Pre-migration this resolved transitively through the Core SLE funnel;
-                // the funnel is redistributed per [MOD-038], so declare it directly.
+
                 .product(
                     name: "Standard Library Extensions",
                     package: "swift-standard-library-extensions"
@@ -85,7 +77,6 @@ let package = Package(
             ]
         ),
 
-        // MARK: - Test Support
         .target(
             name: "Logic Primitives Test Support",
             dependencies: [

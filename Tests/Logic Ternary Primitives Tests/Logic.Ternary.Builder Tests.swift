@@ -104,8 +104,7 @@ struct `Logic.Ternary.Builder Tests` {
                     true
                 }
             }
-            // The `if` gates on a known Bool: an untaken branch is known-absent,
-            // contributing the conjunction identity (true) — not unknown.
+
             #expect(result == .some(true))
         }
 
@@ -264,8 +263,7 @@ struct `Logic.Ternary.Builder Tests` {
                     true
                 }
             }
-            // The `if` gates on a known Bool: an untaken branch is known-absent,
-            // contributing the disjunction identity (false) — not unknown.
+
             #expect(result == .some(false))
         }
     }
@@ -310,7 +308,7 @@ struct `Logic.Ternary.Builder Tests` {
                 true
                 nil as Bool?
             }
-            // NOR of (unknown OR true OR unknown) = NOR of true = false
+
             #expect(result == .some(false))
         }
 
@@ -318,7 +316,7 @@ struct `Logic.Ternary.Builder Tests` {
         func `Empty block returns true`() {
             let result: Bool? = Bool?.none {
             }
-            // NOR of empty = NOT(false) = true
+
             #expect(result == .some(true))
         }
 
@@ -355,8 +353,7 @@ struct `Logic.Ternary.Builder Tests` {
                     true
                 }
             }
-            // Untaken branch contributes the accumulated disjunction's identity
-            // (false), which the final NOR negates: NOR(false) = true.
+
             #expect(result == .some(true))
         }
     }
@@ -378,28 +375,25 @@ struct `Logic.Ternary.Builder Tests` {
 
         @Test
         func `All.buildPartialBlock accumulated`() {
-            // true AND true = true
+
             let r1 = Logic.Ternary.Builder<Bool?>.All.buildPartialBlock(
                 accumulated: true,
                 next: true
             )
             #expect(r1 == .some(true))
 
-            // true AND false = false
             let r2 = Logic.Ternary.Builder<Bool?>.All.buildPartialBlock(
                 accumulated: true,
                 next: false
             )
             #expect(r2 == .some(false))
 
-            // true AND unknown = unknown
             let r3 = Logic.Ternary.Builder<Bool?>.All.buildPartialBlock(
                 accumulated: true,
                 next: nil
             )
             #expect(r3 == nil)
 
-            // unknown AND false = false (false dominates)
             let r4 = Logic.Ternary.Builder<Bool?>.All.buildPartialBlock(
                 accumulated: nil,
                 next: false
@@ -409,28 +403,25 @@ struct `Logic.Ternary.Builder Tests` {
 
         @Test
         func `Any.buildPartialBlock accumulated`() {
-            // false OR false = false
+
             let r1 = Logic.Ternary.Builder<Bool?>.`Any`.buildPartialBlock(
                 accumulated: false,
                 next: false
             )
             #expect(r1 == .some(false))
 
-            // false OR true = true
             let r2 = Logic.Ternary.Builder<Bool?>.`Any`.buildPartialBlock(
                 accumulated: false,
                 next: true
             )
             #expect(r2 == .some(true))
 
-            // false OR unknown = unknown
             let r3 = Logic.Ternary.Builder<Bool?>.`Any`.buildPartialBlock(
                 accumulated: false,
                 next: nil
             )
             #expect(r3 == nil)
 
-            // unknown OR true = true (true dominates)
             let r4 = Logic.Ternary.Builder<Bool?>.`Any`.buildPartialBlock(
                 accumulated: nil,
                 next: true
@@ -440,15 +431,13 @@ struct `Logic.Ternary.Builder Tests` {
 
         @Test
         func `None.buildFinalResult`() {
-            // NOR of true = false
+
             let r1 = Logic.Ternary.Builder<Bool?>.None.buildFinalResult(true)
             #expect(r1 == .some(false))
 
-            // NOR of false = true
             let r2 = Logic.Ternary.Builder<Bool?>.None.buildFinalResult(false)
             #expect(r2 == .some(true))
 
-            // NOR of unknown = unknown
             let r3 = Logic.Ternary.Builder<Bool?>.None.buildFinalResult(nil)
             #expect(r3 == nil)
         }
@@ -459,7 +448,7 @@ struct `Logic.Ternary.Builder Tests` {
 
         @Test
         func `Bool.all vs Bool?.all - no unknowns`() {
-            // With no unknowns, they should behave the same
+
             let boolResult = Bool.all {
                 true
                 true
@@ -476,9 +465,6 @@ struct `Logic.Ternary.Builder Tests` {
         func `Bool.all vs Bool?.all - with conditional`() {
             let condition = false
 
-            // Both builders treat an untaken branch as the conjunction identity
-            // (true): the `if` condition is a known Bool, so absence is known,
-            // not unknown. The two builders agree on identical syntax.
             let boolResult = Bool.all {
                 true
                 if condition {
