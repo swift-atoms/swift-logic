@@ -1,7 +1,7 @@
 import Standard_Library_Extensions
 import Testing
 
-@testable import Logic_Ternary_Primitives
+@testable import Logic_Ternary
 
 @Suite
 struct `Logic.Ternary.Builder Tests` {

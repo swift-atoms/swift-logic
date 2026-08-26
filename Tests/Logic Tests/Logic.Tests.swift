@@ -1,6 +1,6 @@
 import Testing
 
-@testable import Logic_Primitives
+@testable import Logic
 
 extension Logic {
     @Suite

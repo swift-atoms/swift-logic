@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "swift-logic-primitives",
+    name: "swift-logic",
     platforms: [
         .macOS(.v27),
         .iOS(.v27),
@@ -19,22 +19,22 @@ let package = Package(
         ),
 
         .library(
-            name: "Logic Primitives",
-            targets: ["Logic Primitives"]
+            name: "Logic",
+            targets: ["Logic"]
         ),
 
         .library(
-            name: "Logic Ternary Primitives",
-            targets: ["Logic Ternary Primitives"]
+            name: "Logic Ternary",
+            targets: ["Logic Ternary"]
         ),
         .library(
-            name: "Logic Primitives Test Support",
-            targets: ["Logic Primitives Test Support"]
+            name: "Logic Test Support",
+            targets: ["Logic Test Support"]
         ),
     ],
     dependencies: [
         .package(
-            url: "https://github.com/swift-primitives/swift-standard-library-extensions.git",
+            url: "https://github.com/swift-molecules/swift-standard-library-extensions.git",
             branch: "main"
         )
     ],
@@ -46,29 +46,29 @@ let package = Package(
         ),
 
         .target(
-            name: "Logic Ternary Primitives",
+            name: "Logic Ternary",
             dependencies: [
                 "Logic Primitive"
             ]
         ),
 
         .target(
-            name: "Logic Primitives",
+            name: "Logic",
             dependencies: [
                 "Logic Primitive",
-                "Logic Ternary Primitives",
+                "Logic Ternary",
             ]
         ),
         .testTarget(
-            name: "Logic Primitives Tests",
+            name: "Logic Tests",
             dependencies: [
-                "Logic Primitives"
+                "Logic"
             ]
         ),
         .testTarget(
-            name: "Logic Ternary Primitives Tests",
+            name: "Logic Ternary Tests",
             dependencies: [
-                "Logic Ternary Primitives",
+                "Logic Ternary",
 
                 .product(
                     name: "Standard Library Extensions",
@@ -78,9 +78,9 @@ let package = Package(
         ),
 
         .target(
-            name: "Logic Primitives Test Support",
+            name: "Logic Test Support",
             dependencies: [
-                "Logic Primitives"
+                "Logic"
             ],
             path: "Tests/Support"
         ),
