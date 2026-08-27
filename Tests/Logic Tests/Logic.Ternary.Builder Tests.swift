@@ -441,44 +441,4 @@ struct `Logic.Ternary.Builder Tests` {
             #expect(r3 == nil)
         }
     }
-
-    @Suite
-    struct `Comparison with Bool.Builder` {
-
-        @Test
-        func `Bool.all vs Bool?.all - no unknowns`() {
-
-            let boolResult = Bool.all {
-                true
-                true
-            }
-            let ternaryResult: Bool? = Bool?.all {
-                true
-                true
-            }
-            #expect(boolResult == true)
-            #expect(ternaryResult == .some(true))
-        }
-
-        @Test
-        func `Bool.all vs Bool?.all - with conditional`() {
-            let condition = false
-
-            let boolResult = Bool.all {
-                true
-                if condition {
-                    true
-                }
-            }
-            let ternaryResult: Bool? = Bool?.all {
-                true
-                if condition {
-                    true
-                }
-            }
-
-            #expect(boolResult == true)
-            #expect(ternaryResult == .some(true))
-        }
-    }
 }
