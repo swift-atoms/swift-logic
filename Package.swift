@@ -12,46 +12,77 @@ let package = Package(
         .visionOS(.v27),
     ],
     products: [
+
+        .library(
+            name: "Logic Primitive",
+            targets: ["Logic Primitive"]
+        ),
+
         .library(
             name: "Logic",
             targets: ["Logic"]
         ),
+
         .library(
-            name: "Logic Standard Library Integration",
-            targets: ["Logic Standard Library Integration"]
+            name: "Logic Ternary",
+            targets: ["Logic Ternary"]
         ),
         .library(
-            name: "Logic Apple Foundation Integration",
-            targets: ["Logic Apple Foundation Integration"]
+            name: "Logic Test Support",
+            targets: ["Logic Test Support"]
         ),
     ],
-    dependencies: [],
+    dependencies: [
+        .package(
+            url: "https://github.com/swift-molecules/swift-standard-library-extensions.git",
+            branch: "main"
+        )
+    ],
     targets: [
+
         .target(
-            name: "Logic",
+            name: "Logic Primitive",
             dependencies: []
         ),
+
         .target(
-            name: "Logic Standard Library Integration",
-            dependencies: ["Logic"]
-        ),
-        .target(
-            name: "Logic Apple Foundation Integration",
+            name: "Logic Ternary",
             dependencies: [
-                "Logic",
-                "Logic Standard Library Integration",
+                "Logic Primitive"
+            ]
+        ),
+
+        .target(
+            name: "Logic",
+            dependencies: [
+                "Logic Primitive",
+                "Logic Ternary",
             ]
         ),
         .testTarget(
             name: "Logic Tests",
-            dependencies: ["Logic"]
+            dependencies: [
+                "Logic"
+            ]
         ),
         .testTarget(
-            name: "Logic Standard Library Integration Tests",
+            name: "Logic Ternary Tests",
             dependencies: [
-                "Logic",
-                "Logic Standard Library Integration",
+                "Logic Ternary",
+
+                .product(
+                    name: "Standard Library Extensions",
+                    package: "swift-standard-library-extensions"
+                ),
             ]
+        ),
+
+        .target(
+            name: "Logic Test Support",
+            dependencies: [
+                "Logic"
+            ],
+            path: "Tests/Support"
         ),
     ],
     swiftLanguageModes: [.v6]

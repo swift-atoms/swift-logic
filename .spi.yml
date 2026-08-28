@@ -1,0 +1,7 @@
+version: 1
+builder:
+  configs:
+  - documentation_targets:
+    - Logic Primitive
+    - Logic
+    - Logic Ternary

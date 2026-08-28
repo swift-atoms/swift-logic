@@ -13,7 +13,7 @@ Classical and three-valued (Strong Kleene) logic for Swift — a `Logic` namespa
 Three-valued conditions read declaratively through result builders — `all` is conjunction, `any` is disjunction, `none` is its negation:
 
 ```swift
-import Logic
+import Logic_Ternary
 
 let isAuthenticated: Bool? = true
 let permissionLoaded: Bool? = nil   // still resolving — unknown
@@ -31,7 +31,7 @@ let granted = Bool?.all {
 The same logic is available as operators and named functions. Classical operators work over any `Logic.Protocol` type (such as `Bool`); the three-valued operators propagate `unknown` through `Bool?`:
 
 ```swift
-import Logic
+import Logic   // umbrella: binary + ternary
 
 // Classical, two-valued:
 let parity = Logic.xor(true, false)        // true
@@ -69,13 +69,14 @@ Requires Swift 6.3.1 and macOS 26 / iOS 26 / tvOS 26 / watchOS 26 / visionOS 26 
 
 ## Architecture
 
-Import `Logic` for the domain; the integration products compose on top of it.
+Import `Logic` for everything, or a narrower product to keep your surface small. `Logic Primitive` has no dependencies; the remaining targets compose on top of it.
 
 | Product | Target | Purpose |
 |---------|--------|---------|
-| `Logic` | `Sources/Logic/` | The `Logic` namespace: the two-valued `Logic.Protocol`, the `Bool` conformance, and the classical operators `Logic.{and, or, not, xor, nand, nor, xnor, implies, iff}`; plus `Logic.Ternary`: Strong Kleene three-valued logic — the `Logic.Ternary.Protocol`, the `Bool?` conformance, the `!`, `^`, and `!^` operators with their short-circuiting AND / OR / NAND / NOR forms, and the `all` / `any` / `none` result builders. |
-| `Logic Standard Library Integration` | `Sources/Logic Standard Library Integration/` | Deprecated collapse-guard overloads of the standard library's `==`, `!=`, and `??` over `Bool?` / `Bool`. |
-| `Logic Apple Foundation Integration` | `Sources/Logic Apple Foundation Integration/` | The only module allowed to import Foundation; currently a seed. |
+| `Logic Primitive` | `Sources/Logic Primitive/` | The `Logic` namespace: the two-valued `Logic.Protocol`, the `Bool` conformance, and the classical operators `Logic.{and, or, not, xor, nand, nor, xnor, implies, iff}`. |
+| `Logic Ternary` | `Sources/Logic Ternary/` | `Logic.Ternary`: Strong Kleene three-valued logic — the `Logic.Ternary.Protocol`, the `Bool?` conformance, the `!`, `^`, and `!^` operators with their short-circuiting AND / OR / NAND / NOR forms, and the `all` / `any` / `none` result builders. |
+| `Logic` | `Sources/Logic/` | Umbrella that re-exports `Logic Primitive` and `Logic Ternary`. |
+| `Logic Test Support` | `Tests/Support/` | Re-exports the umbrella for test consumers. |
 
 Foundation-free.
 

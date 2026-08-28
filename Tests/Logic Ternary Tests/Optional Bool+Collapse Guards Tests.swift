@@ -1,7 +1,6 @@
 import Testing
 
-@testable import Logic
-@testable import Logic_Standard_Library_Integration
+@testable import Logic_Ternary
 
 @Suite
 struct `Optional Bool Strict Tests` {
