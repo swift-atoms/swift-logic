@@ -31,7 +31,8 @@ let granted = Bool?.all {
 The same logic is available as operators and named functions. Classical operators work over any `Logic.Protocol` type (such as `Bool`); the three-valued operators propagate `unknown` through `Bool?`:
 
 ```swift
-import Logic   // umbrella: binary + ternary
+import Logic
+import Logic_Ternary
 
 // Classical, two-valued:
 let parity = Logic.xor(true, false)        // true
@@ -50,7 +51,7 @@ Conform your own types to `Logic.Protocol` (two-valued) or `Logic.Ternary.Protoc
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/swift-molecules/swift-logic.git", branch: "main")
+    .package(url: "https://github.com/swift-atoms/swift-logic.git", branch: "main")
 ]
 ```
 
@@ -58,7 +59,7 @@ dependencies: [
 .target(
     name: "App",
     dependencies: [
-        .product(name: "Logic", package: "swift-logic"),
+        .product(name: "Logic Ternary", package: "swift-logic"),
     ]
 )
 ```
@@ -69,14 +70,12 @@ Requires Swift 6.3.1 and macOS 26 / iOS 26 / tvOS 26 / watchOS 26 / visionOS 26 
 
 ## Architecture
 
-Import `Logic` for everything, or a narrower product to keep your surface small. `Logic Primitive` has no dependencies; the remaining targets compose on top of it.
+Import `Logic` for classical two-valued logic or `Logic Ternary` for the layered three-valued implementation.
 
 | Product | Target | Purpose |
 |---------|--------|---------|
-| `Logic Primitive` | `Sources/Logic Primitive/` | The `Logic` namespace: the two-valued `Logic.Protocol`, the `Bool` conformance, and the classical operators `Logic.{and, or, not, xor, nand, nor, xnor, implies, iff}`. |
+| `Logic` | `Sources/Logic/` | The `Logic` namespace: the two-valued `Logic.Protocol`, the `Bool` conformance, and the classical operators `Logic.{and, or, not, xor, nand, nor, xnor, implies, iff}`. |
 | `Logic Ternary` | `Sources/Logic Ternary/` | `Logic.Ternary`: Strong Kleene three-valued logic — the `Logic.Ternary.Protocol`, the `Bool?` conformance, the `!`, `^`, and `!^` operators with their short-circuiting AND / OR / NAND / NOR forms, and the `all` / `any` / `none` result builders. |
-| `Logic` | `Sources/Logic/` | Umbrella that re-exports `Logic Primitive` and `Logic Ternary`. |
-| `Logic Test Support` | `Tests/Support/` | Re-exports the umbrella for test consumers. |
 
 Foundation-free.
 

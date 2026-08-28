@@ -14,11 +14,6 @@ let package = Package(
     products: [
 
         .library(
-            name: "Logic Primitive",
-            targets: ["Logic Primitive"]
-        ),
-
-        .library(
             name: "Logic",
             targets: ["Logic"]
         ),
@@ -27,62 +22,32 @@ let package = Package(
             name: "Logic Ternary",
             targets: ["Logic Ternary"]
         ),
-        .library(
-            name: "Logic Test Support",
-            targets: ["Logic Test Support"]
-        ),
     ],
-    dependencies: [
-        .package(
-            url: "https://github.com/swift-molecules/swift-standard-library-extensions.git",
-            branch: "main"
-        )
-    ],
+    dependencies: [],
     targets: [
 
         .target(
-            name: "Logic Primitive",
+            name: "Logic",
             dependencies: []
         ),
 
         .target(
             name: "Logic Ternary",
             dependencies: [
-                "Logic Primitive"
-            ]
-        ),
-
-        .target(
-            name: "Logic",
-            dependencies: [
-                "Logic Primitive",
-                "Logic Ternary",
+                .target(name: "Logic")
             ]
         ),
         .testTarget(
             name: "Logic Tests",
             dependencies: [
-                "Logic"
+                .target(name: "Logic")
             ]
         ),
         .testTarget(
             name: "Logic Ternary Tests",
             dependencies: [
-                "Logic Ternary",
-
-                .product(
-                    name: "Standard Library Extensions",
-                    package: "swift-standard-library-extensions"
-                ),
+                .target(name: "Logic Ternary"),
             ]
-        ),
-
-        .target(
-            name: "Logic Test Support",
-            dependencies: [
-                "Logic"
-            ],
-            path: "Tests/Support"
         ),
     ],
     swiftLanguageModes: [.v6]
