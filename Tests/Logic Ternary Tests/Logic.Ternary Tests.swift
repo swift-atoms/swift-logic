@@ -1,6 +1,6 @@
 import Testing
 
-@testable import Logic_Ternary_Primitives
+@testable import Logic_Ternary
 
 enum Case {}
 

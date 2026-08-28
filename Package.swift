@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "swift-logic-primitives",
+    name: "swift-logic",
     platforms: [
         .macOS(.v27),
         .iOS(.v27),
@@ -14,22 +14,13 @@ let package = Package(
     products: [
 
         .library(
-            name: "Logic Primitive",
-            targets: ["Logic Primitive"]
+            name: "Logic",
+            targets: ["Logic"]
         ),
 
         .library(
-            name: "Logic Primitives",
-            targets: ["Logic Primitives"]
-        ),
-
-        .library(
-            name: "Logic Ternary Primitives",
-            targets: ["Logic Ternary Primitives"]
-        ),
-        .library(
-            name: "Logic Primitives Test Support",
-            targets: ["Logic Primitives Test Support"]
+            name: "Logic Ternary",
+            targets: ["Logic Ternary"]
         ),
     ],
     dependencies: [
@@ -41,48 +32,32 @@ let package = Package(
     targets: [
 
         .target(
-            name: "Logic Primitive",
+            name: "Logic",
             dependencies: []
         ),
 
         .target(
-            name: "Logic Ternary Primitives",
+            name: "Logic Ternary",
             dependencies: [
-                "Logic Primitive"
-            ]
-        ),
-
-        .target(
-            name: "Logic Primitives",
-            dependencies: [
-                "Logic Primitive",
-                "Logic Ternary Primitives",
+                .target(name: "Logic")
             ]
         ),
         .testTarget(
-            name: "Logic Primitives Tests",
+            name: "Logic Tests",
             dependencies: [
-                "Logic Primitives"
+                .target(name: "Logic")
             ]
         ),
         .testTarget(
-            name: "Logic Ternary Primitives Tests",
+            name: "Logic Ternary Tests",
             dependencies: [
-                "Logic Ternary Primitives",
+                .target(name: "Logic Ternary"),
 
                 .product(
                     name: "Standard Library Extensions",
                     package: "swift-standard-library-extensions"
                 ),
             ]
-        ),
-
-        .target(
-            name: "Logic Primitives Test Support",
-            dependencies: [
-                "Logic Primitives"
-            ],
-            path: "Tests/Support"
         ),
     ],
     swiftLanguageModes: [.v6]
