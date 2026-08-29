@@ -23,7 +23,12 @@ let package = Package(
             targets: ["Logic Ternary"]
         ),
     ],
-    dependencies: [],
+    dependencies: [
+        .package(
+            url: "https://github.com/swift-atoms/swift-standard-library-extensions.git",
+            branch: "main"
+        )
+    ],
     targets: [
 
         .target(
@@ -47,6 +52,10 @@ let package = Package(
             name: "Logic Ternary Tests",
             dependencies: [
                 .target(name: "Logic Ternary"),
+                .product(
+                    name: "Standard Library Extensions",
+                    package: "swift-standard-library-extensions"
+                ),
             ]
         ),
     ],
