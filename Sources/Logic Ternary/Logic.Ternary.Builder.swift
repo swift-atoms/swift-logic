@@ -31,7 +31,7 @@ extension Logic.Ternary {
             @inlinable
             public static func buildPartialBlock(accumulated: T, next: T) -> T {
 
-                if T.from(accumulated).isFalse || T.from(next).isFalse {
+                if T.from(accumulated) == .some(false) || T.from(next) == .some(false) {
                     return .false
                 }
                 if T.from(accumulated) == nil || T.from(next) == nil {
@@ -64,7 +64,7 @@ extension Logic.Ternary {
             public static func buildArray(_ components: [T]) -> T {
                 var hasUnknown = false
                 for component in components {
-                    if T.from(component).isFalse {
+                    if T.from(component) == .some(false) {
                         return .false
                     }
                     if T.from(component) == nil {
@@ -109,7 +109,7 @@ extension Logic.Ternary {
             @inlinable
             public static func buildPartialBlock(accumulated: T, next: T) -> T {
 
-                if T.from(accumulated).isTrue || T.from(next).isTrue {
+                if T.from(accumulated) == .some(true) || T.from(next) == .some(true) {
                     return .true
                 }
                 if T.from(accumulated) == nil || T.from(next) == nil {
@@ -142,7 +142,7 @@ extension Logic.Ternary {
             public static func buildArray(_ components: [T]) -> T {
                 var hasUnknown = false
                 for component in components {
-                    if T.from(component).isTrue {
+                    if T.from(component) == .some(true) {
                         return .true
                     }
                     if T.from(component) == nil {
@@ -187,7 +187,7 @@ extension Logic.Ternary {
             @inlinable
             public static func buildPartialBlock(accumulated: T, next: T) -> T {
 
-                if T.from(accumulated).isTrue || T.from(next).isTrue {
+                if T.from(accumulated) == .some(true) || T.from(next) == .some(true) {
                     return .true
                 }
                 if T.from(accumulated) == nil || T.from(next) == nil {
@@ -220,7 +220,7 @@ extension Logic.Ternary {
             public static func buildArray(_ components: [T]) -> T {
                 var hasUnknown = false
                 for component in components {
-                    if T.from(component).isTrue {
+                    if T.from(component) == .some(true) {
                         return .true
                     }
                     if T.from(component) == nil {
@@ -262,24 +262,6 @@ extension Logic.Ternary {
 
     @inlinable
     public static func none<T: `Protocol`>(@Builder<T>.None _ builder: () -> T) -> T {
-        builder()
-    }
-}
-
-extension Optional where Wrapped == Bool {
-
-    @inlinable
-    public static func all(@Logic.Ternary.Builder<Bool?>.All _ builder: () -> Bool?) -> Bool? {
-        builder()
-    }
-
-    @inlinable
-    public static func any(@Logic.Ternary.Builder<Bool?>.`Any` _ builder: () -> Bool?) -> Bool? {
-        builder()
-    }
-
-    @inlinable
-    public static func none(@Logic.Ternary.Builder<Bool?>.None _ builder: () -> Bool?) -> Bool? {
         builder()
     }
 }

@@ -6,40 +6,40 @@ extension Logic {
 extension Logic.Ternary {
     @inlinable @inline(always)
     package static func _and<T: `Protocol`>(_ lhs: T, _ rhs: T) -> T {
-        if T.from(lhs).isFalse { return .false }
-        if T.from(rhs).isFalse { return .false }
+        if T.from(lhs) == .some(false) { return .false }
+        if T.from(rhs) == .some(false) { return .false }
         if T.from(lhs) == nil || T.from(rhs) == nil { return .unknown }
         return .true
     }
 
     @inlinable @inline(always)
     package static func _or<T: `Protocol`>(_ lhs: T, _ rhs: T) -> T {
-        if T.from(lhs).isTrue { return .true }
-        if T.from(rhs).isTrue { return .true }
+        if T.from(lhs) == .some(true) { return .true }
+        if T.from(rhs) == .some(true) { return .true }
         if T.from(lhs) == nil || T.from(rhs) == nil { return .unknown }
         return .false
     }
 
     @inlinable @inline(always)
     package static func _nand<T: `Protocol`>(_ lhs: T, _ rhs: T) -> T {
-        if T.from(lhs).isFalse { return .true }
-        if T.from(rhs).isFalse { return .true }
+        if T.from(lhs) == .some(false) { return .true }
+        if T.from(rhs) == .some(false) { return .true }
         if T.from(lhs) == nil || T.from(rhs) == nil { return .unknown }
         return .false
     }
 
     @inlinable @inline(always)
     package static func _nor<T: `Protocol`>(_ lhs: T, _ rhs: T) -> T {
-        if T.from(lhs).isTrue { return .false }
-        if T.from(rhs).isTrue { return .false }
+        if T.from(lhs) == .some(true) { return .false }
+        if T.from(rhs) == .some(true) { return .false }
         if T.from(lhs) == nil || T.from(rhs) == nil { return .unknown }
         return .true
     }
 
     @inlinable @inline(always)
     package static func _implies<T: `Protocol`>(_ lhs: T, _ rhs: T) -> T {
-        if T.from(lhs).isFalse { return .true }
-        if T.from(rhs).isTrue { return .true }
+        if T.from(lhs) == .some(false) { return .true }
+        if T.from(rhs) == .some(true) { return .true }
         if T.from(lhs) == nil || T.from(rhs) == nil { return .unknown }
         return .false
     }
@@ -52,7 +52,7 @@ extension Logic.Ternary {
         _ lhs: T,
         _ rhs: @autoclosure () throws(E) -> T
     ) throws(E) -> T {
-        if T.from(lhs).isFalse { return .false }
+        if T.from(lhs) == .some(false) { return .false }
         return _and(lhs, try rhs())
     }
 }
@@ -62,7 +62,7 @@ public func && <E: Swift.Error, T: Logic.Ternary.`Protocol`>(
     lhs: T,
     rhs: @autoclosure () throws(E) -> T
 ) throws(E) -> T {
-    if T.from(lhs).isFalse { return .false }
+    if T.from(lhs) == .some(false) { return .false }
     return Logic.Ternary._and(lhs, try rhs())
 }
 
@@ -73,7 +73,7 @@ extension Logic.Ternary {
         _ lhs: T,
         _ rhs: @autoclosure () throws(E) -> T
     ) throws(E) -> T {
-        if T.from(lhs).isTrue { return .true }
+        if T.from(lhs) == .some(true) { return .true }
         return _or(lhs, try rhs())
     }
 }
@@ -83,7 +83,7 @@ public func || <E: Swift.Error, T: Logic.Ternary.`Protocol`>(
     lhs: T,
     rhs: @autoclosure () throws(E) -> T
 ) throws(E) -> T {
-    if T.from(lhs).isTrue { return .true }
+    if T.from(lhs) == .some(true) { return .true }
     return Logic.Ternary._or(lhs, try rhs())
 }
 
@@ -127,7 +127,7 @@ extension Logic.Ternary {
         _ lhs: T,
         _ rhs: @autoclosure () throws(E) -> T
     ) throws(E) -> T {
-        if T.from(lhs).isFalse { return .true }
+        if T.from(lhs) == .some(false) { return .true }
         return _nand(lhs, try rhs())
     }
 }
@@ -137,7 +137,7 @@ public func !&& <E: Swift.Error, T: Logic.Ternary.`Protocol`>(
     lhs: T,
     rhs: @autoclosure () throws(E) -> T
 ) throws(E) -> T {
-    if T.from(lhs).isFalse { return .true }
+    if T.from(lhs) == .some(false) { return .true }
     return Logic.Ternary._nand(lhs, try rhs())
 }
 
@@ -150,7 +150,7 @@ extension Logic.Ternary {
         _ lhs: T,
         _ rhs: @autoclosure () throws(E) -> T
     ) throws(E) -> T {
-        if T.from(lhs).isTrue { return .false }
+        if T.from(lhs) == .some(true) { return .false }
         return _nor(lhs, try rhs())
     }
 }
@@ -160,7 +160,7 @@ public func !|| <E: Swift.Error, T: Logic.Ternary.`Protocol`>(
     lhs: T,
     rhs: @autoclosure () throws(E) -> T
 ) throws(E) -> T {
-    if T.from(lhs).isTrue { return .false }
+    if T.from(lhs) == .some(true) { return .false }
     return Logic.Ternary._nor(lhs, try rhs())
 }
 
@@ -171,7 +171,7 @@ extension Logic.Ternary {
         _ lhs: T,
         _ rhs: @autoclosure () throws(E) -> T
     ) throws(E) -> T {
-        if T.from(lhs).isFalse { return .true }
+        if T.from(lhs) == .some(false) { return .true }
         return _implies(lhs, try rhs())
     }
 }

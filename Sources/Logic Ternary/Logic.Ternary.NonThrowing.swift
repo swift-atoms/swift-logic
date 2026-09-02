@@ -3,7 +3,7 @@ public func && <T: Logic.Ternary.`Protocol`>(
     lhs: T,
     rhs: @autoclosure () -> T
 ) -> T {
-    if T.from(lhs).isFalse { return .false }
+    if T.from(lhs) == .some(false) { return .false }
     return Logic.Ternary._and(lhs, rhs())
 }
 
@@ -12,7 +12,7 @@ public func || <T: Logic.Ternary.`Protocol`>(
     lhs: T,
     rhs: @autoclosure () -> T
 ) -> T {
-    if T.from(lhs).isTrue { return .true }
+    if T.from(lhs) == .some(true) { return .true }
     return Logic.Ternary._or(lhs, rhs())
 }
 
@@ -21,7 +21,7 @@ public func !&& <T: Logic.Ternary.`Protocol`>(
     lhs: T,
     rhs: @autoclosure () -> T
 ) -> T {
-    if T.from(lhs).isFalse { return .true }
+    if T.from(lhs) == .some(false) { return .true }
     return Logic.Ternary._nand(lhs, rhs())
 }
 
@@ -30,7 +30,7 @@ public func !|| <T: Logic.Ternary.`Protocol`>(
     lhs: T,
     rhs: @autoclosure () -> T
 ) -> T {
-    if T.from(lhs).isTrue { return .false }
+    if T.from(lhs) == .some(true) { return .false }
     return Logic.Ternary._nor(lhs, rhs())
 }
 
@@ -41,7 +41,7 @@ extension Logic.Ternary {
         _ lhs: T,
         _ rhs: @autoclosure () -> T
     ) -> T {
-        if T.from(lhs).isFalse { return .false }
+        if T.from(lhs) == .some(false) { return .false }
         return _and(lhs, rhs())
     }
 
@@ -50,7 +50,7 @@ extension Logic.Ternary {
         _ lhs: T,
         _ rhs: @autoclosure () -> T
     ) -> T {
-        if T.from(lhs).isTrue { return .true }
+        if T.from(lhs) == .some(true) { return .true }
         return _or(lhs, rhs())
     }
 
@@ -59,7 +59,7 @@ extension Logic.Ternary {
         _ lhs: T,
         _ rhs: @autoclosure () -> T
     ) -> T {
-        if T.from(lhs).isFalse { return .true }
+        if T.from(lhs) == .some(false) { return .true }
         return _nand(lhs, rhs())
     }
 
@@ -68,7 +68,7 @@ extension Logic.Ternary {
         _ lhs: T,
         _ rhs: @autoclosure () -> T
     ) -> T {
-        if T.from(lhs).isTrue { return .false }
+        if T.from(lhs) == .some(true) { return .false }
         return _nor(lhs, rhs())
     }
 
@@ -77,7 +77,7 @@ extension Logic.Ternary {
         _ lhs: T,
         _ rhs: @autoclosure () -> T
     ) -> T {
-        if T.from(lhs).isFalse { return .true }
+        if T.from(lhs) == .some(false) { return .true }
         return _implies(lhs, rhs())
     }
 }

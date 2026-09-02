@@ -1,9 +1,10 @@
 import Testing
+import Logic_Standard_Library_Integration
 
 @testable import Logic_Ternary
 
 @Suite
-struct `Optional Bool Strict Tests` {
+struct `Optional Logic Ternary Tests` {
     @Suite struct Unit {}
     @Suite struct `Edge Case` {}
     @Suite struct Integration {}

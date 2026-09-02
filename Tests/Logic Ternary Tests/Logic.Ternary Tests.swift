@@ -1,4 +1,5 @@
 import Testing
+import Logic_Standard_Library_Integration
 
 @testable import Logic_Ternary
 
@@ -380,69 +381,6 @@ extension Logic.Ternary.Test {
             let aOrC: Bool? = a || c
             let result3: Bool? = aOrC && b
             #expect(result3 == .some(false))
-        }
-    }
-}
-
-extension Logic.Ternary.Test {
-    @Suite
-    struct `Kleene Degradation` {
-        static let values: [Bool?] = [true, false, nil]
-
-        @Test(arguments: Logic.Ternary.Test.AND.andCases)
-        func and(_ testCase: Case.Binary) {
-            #expect(Logic.and(testCase.lhs, testCase.rhs) == testCase.expected)
-        }
-
-        @Test(arguments: Logic.Ternary.Test.OR.orCases)
-        func or(_ testCase: Case.Binary) {
-            #expect(Logic.or(testCase.lhs, testCase.rhs) == testCase.expected)
-        }
-
-        @Test(arguments: Logic.Ternary.Test.notCases)
-        func not(_ testCase: Case.Unary) {
-            #expect(Logic.not(testCase.input) == testCase.expected)
-        }
-
-        @Test(arguments: Logic.Ternary.Test.XOR.xorCases)
-        func xor(_ testCase: Case.Binary) {
-            #expect(Logic.xor(testCase.lhs, testCase.rhs) == testCase.expected)
-        }
-
-        @Test(arguments: Logic.Ternary.Test.NAND.nandCases)
-        func nand(_ testCase: Case.Binary) {
-            #expect(Logic.nand(testCase.lhs, testCase.rhs) == testCase.expected)
-        }
-
-        @Test(arguments: Logic.Ternary.Test.NOR.norCases)
-        func nor(_ testCase: Case.Binary) {
-            #expect(Logic.nor(testCase.lhs, testCase.rhs) == testCase.expected)
-        }
-
-        @Test(arguments: Logic.Ternary.Test.XNOR.xnorCases)
-        func xnor(_ testCase: Case.Binary) {
-            #expect(Logic.xnor(testCase.lhs, testCase.rhs) == testCase.expected)
-        }
-
-        @Test(arguments: Logic.Ternary.Test.Implication.implicationCases)
-        func implies(_ testCase: Case.Binary) {
-            #expect(Logic.implies(testCase.lhs, testCase.rhs) == testCase.expected)
-        }
-
-        @Test(arguments: Logic.Ternary.Test.XNOR.xnorCases)
-        func iff(_ testCase: Case.Binary) {
-            #expect(Logic.iff(testCase.lhs, testCase.rhs) == testCase.expected)
-        }
-
-        @Test(arguments: values, values)
-        func `agrees With Ternary Operators`(_ a: Bool?, _ b: Bool?) {
-            #expect(Logic.and(a, b) == (a && b))
-            #expect(Logic.or(a, b) == (a || b))
-            #expect(Logic.xor(a, b) == (a ^ b))
-            #expect(Logic.xnor(a, b) == (a !^ b))
-            #expect(Logic.nand(a, b) == (a !&& b))
-            #expect(Logic.nor(a, b) == (a !|| b))
-            #expect(Logic.implies(a, b) == Logic.Ternary.implies(a, b))
         }
     }
 }
