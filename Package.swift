@@ -45,7 +45,6 @@ let package = Package(
             dependencies: [
                 .target(name: "Logic"),
                 .target(name: "Logic Test Support"),
-                .target(name: "Logic Foundation Integration"),
             ],
             path: "Tests/Logic Tests"
         ),
@@ -53,7 +52,7 @@ let package = Package(
     swiftLanguageModes: [.v6]
 )
 
-for target in package.targets where ![.system, .binary, .plugin].contains(target.type) {
+for target in package.targets where ![.system, .binary, .plugin, .macro].contains(target.type) {
     target.swiftSettings = (target.swiftSettings ?? []) + [
         .strictMemorySafety(),
         .enableUpcomingFeature("ExistentialAny"),

@@ -1,4 +1,4 @@
-extension Swift.Optional: Logic.Ternary.`Protocol` where Wrapped == Bool {
+extension Swift::Optional: Logic.Ternary.`Protocol` where Wrapped == Bool {
 
     @inlinable
     public static var `true`: Bool? { true }
@@ -23,7 +23,7 @@ extension Swift.Optional: Logic.Ternary.`Protocol` where Wrapped == Bool {
     }
 }
 
-extension Swift.Optional where Wrapped == Bool {
+extension Swift::Optional where Wrapped == Bool {
 
     public init<T: Logic.Ternary.`Protocol`>(_ value: T) {
         self = T.from(value)

@@ -48,7 +48,7 @@ extension Logic.Ternary {
 extension Logic.Ternary {
 
     @inlinable
-    public static func and<E: Swift.Error, T: `Protocol`>(
+    public static func and<E: Swift::Error, T: `Protocol`>(
         _ lhs: T,
         _ rhs: @autoclosure () throws(E) -> T
     ) throws(E) -> T {
@@ -58,7 +58,7 @@ extension Logic.Ternary {
 }
 
 @inlinable
-public func && <E: Swift.Error, T: Logic.Ternary.`Protocol`>(
+public func && <E: Swift::Error, T: Logic.Ternary.`Protocol`>(
     lhs: T,
     rhs: @autoclosure () throws(E) -> T
 ) throws(E) -> T {
@@ -69,7 +69,7 @@ public func && <E: Swift.Error, T: Logic.Ternary.`Protocol`>(
 extension Logic.Ternary {
 
     @inlinable
-    public static func or<E: Swift.Error, T: `Protocol`>(
+    public static func or<E: Swift::Error, T: `Protocol`>(
         _ lhs: T,
         _ rhs: @autoclosure () throws(E) -> T
     ) throws(E) -> T {
@@ -79,7 +79,7 @@ extension Logic.Ternary {
 }
 
 @inlinable
-public func || <E: Swift.Error, T: Logic.Ternary.`Protocol`>(
+public func || <E: Swift::Error, T: Logic.Ternary.`Protocol`>(
     lhs: T,
     rhs: @autoclosure () throws(E) -> T
 ) throws(E) -> T {
@@ -123,7 +123,7 @@ infix operator !&& : LogicalConjunctionPrecedence
 extension Logic.Ternary {
 
     @inlinable
-    public static func nand<E: Swift.Error, T: `Protocol`>(
+    public static func nand<E: Swift::Error, T: `Protocol`>(
         _ lhs: T,
         _ rhs: @autoclosure () throws(E) -> T
     ) throws(E) -> T {
@@ -133,7 +133,7 @@ extension Logic.Ternary {
 }
 
 @inlinable
-public func !&& <E: Swift.Error, T: Logic.Ternary.`Protocol`>(
+public func !&& <E: Swift::Error, T: Logic.Ternary.`Protocol`>(
     lhs: T,
     rhs: @autoclosure () throws(E) -> T
 ) throws(E) -> T {
@@ -146,7 +146,7 @@ infix operator !|| : LogicalDisjunctionPrecedence
 extension Logic.Ternary {
 
     @inlinable
-    public static func nor<E: Swift.Error, T: `Protocol`>(
+    public static func nor<E: Swift::Error, T: `Protocol`>(
         _ lhs: T,
         _ rhs: @autoclosure () throws(E) -> T
     ) throws(E) -> T {
@@ -156,7 +156,7 @@ extension Logic.Ternary {
 }
 
 @inlinable
-public func !|| <E: Swift.Error, T: Logic.Ternary.`Protocol`>(
+public func !|| <E: Swift::Error, T: Logic.Ternary.`Protocol`>(
     lhs: T,
     rhs: @autoclosure () throws(E) -> T
 ) throws(E) -> T {
@@ -167,7 +167,7 @@ public func !|| <E: Swift.Error, T: Logic.Ternary.`Protocol`>(
 extension Logic.Ternary {
 
     @inlinable
-    public static func implies<E: Swift.Error, T: `Protocol`>(
+    public static func implies<E: Swift::Error, T: `Protocol`>(
         _ lhs: T,
         _ rhs: @autoclosure () throws(E) -> T
     ) throws(E) -> T {
