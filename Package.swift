@@ -21,22 +21,21 @@ let package = Package(
     targets: [
         .target(
             name: "Logic",
-            dependencies: [
-            ],
+            dependencies: [],
             path: "Sources/Logic"
         ),
-        
+
         .target(
             name: "Logic Foundation Integration",
             dependencies: [
-                .target(name: "Logic"),
+                .target(name: "Logic")
             ],
             path: "Sources/Logic Foundation Integration"
         ),
         .target(
             name: "Logic Test Support",
             dependencies: [
-                .target(name: "Logic"),
+                .target(name: "Logic")
             ],
             path: "Tests/Support"
         ),
@@ -53,14 +52,15 @@ let package = Package(
 )
 
 for target in package.targets where ![.system, .binary, .plugin, .macro].contains(target.type) {
-    target.swiftSettings = (target.swiftSettings ?? []) + [
-        .strictMemorySafety(),
-        .enableUpcomingFeature("ExistentialAny"),
-        .enableUpcomingFeature("InternalImportsByDefault"),
-        .enableUpcomingFeature("MemberImportVisibility"),
-        .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
-        .enableUpcomingFeature("InferIsolatedConformances"),
-        .enableExperimentalFeature("Lifetimes"),
-        .treatAllWarnings(as: .error),
-    ]
+    target.swiftSettings =
+        (target.swiftSettings ?? []) + [
+            .strictMemorySafety(),
+            .enableUpcomingFeature("ExistentialAny"),
+            .enableUpcomingFeature("InternalImportsByDefault"),
+            .enableUpcomingFeature("MemberImportVisibility"),
+            .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
+            .enableUpcomingFeature("InferIsolatedConformances"),
+            .enableExperimentalFeature("Lifetimes"),
+            .treatAllWarnings(as: .error),
+        ]
 }

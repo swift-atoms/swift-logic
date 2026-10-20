@@ -1,5 +1,5 @@
-import Testing
 import Logic
+import Testing
 
 @testable import Logic
 

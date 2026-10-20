@@ -1,2 +1,2 @@
-@_exported public import Logic
 import Foundation
+@_exported public import Logic
