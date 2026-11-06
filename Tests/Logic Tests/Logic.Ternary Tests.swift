@@ -32,7 +32,9 @@ extension Case.Unary {
     }
 }
 
-extension Logic.Ternary {
+enum `Logic.Ternary Tests` {}
+
+extension `Logic.Ternary Tests` {
     @Suite
     struct `Ternary operations follow Strong Kleene logic and short circuit when decisive` {
         static let notCases: [Case.Unary] = [
@@ -53,7 +55,7 @@ extension Logic.Ternary {
     }
 }
 
-extension Logic.Ternary.`Ternary operations follow Strong Kleene logic and short circuit when decisive` {
+extension `Logic.Ternary Tests`.`Ternary operations follow Strong Kleene logic and short circuit when decisive` {
 
     @Suite
     struct `Ternary conjunction follows the Strong Kleene truth table` {
