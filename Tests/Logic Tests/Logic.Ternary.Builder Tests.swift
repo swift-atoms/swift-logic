@@ -3,10 +3,20 @@ import Testing
 
 @testable import Logic
 
-@Suite
-struct `Ternary builders combine expressions using Strong Kleene logic` {
+enum `Logic.Ternary.Builder Tests` {}
+
+extension `Logic.Ternary.Builder Tests` {
+    @Suite
+    struct `Ternary builders combine expressions using Strong Kleene logic` {
+
+    }
+}
+
+extension `Logic.Ternary.Builder Tests`.`Ternary builders combine expressions using Strong Kleene logic` {
     @Suite struct `No ternary builder unit cases are defined` {}
+
     @Suite struct `No ternary builder boundary cases are defined` {}
+
     @Suite struct `No ternary builder integration cases are defined` {}
 
     @Suite
@@ -442,5 +452,4 @@ struct `Ternary builders combine expressions using Strong Kleene logic` {
             #expect(r3 == nil)
         }
     }
-
 }
